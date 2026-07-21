@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const navItems = [
@@ -57,26 +58,24 @@ const education = [
 ];
 
 const projects = [
+  
   {
-    name: "Mentor Quest",
-    type: "Educational RPG Web App",
+    name: "Air Transit",
+    type: "Airport Finder Web Application",
     description:
-      "A game-style learning platform with islands, lessons, quizzes, map movement, collision logic, and interactive progression.",
-    tags: ["JavaScript", "Canvas", "AI", "Game Dev"],
+      "A web application that allows users to search through airport data, find airports by location, and view details such as airport codes, cities, countries, and coordinates.",
+    tags: ["TypeScript", "HTML/CSS", "JSON", "Data Filtering"],
+    image: "/Air Transit.png",
+    imageAlt: "Air Transit airport finder application screenshot",
   },
   {
     name: "Automated Invoice Generator",
     type: "Desktop Productivity Tool",
     description:
-      "A PyQt5 app that turns CSV/XLSX data into clean DOCX invoices using templates and automated replacements.",
+      "A PyQt5 app that turns CSV and XLSX data into clean DOCX invoices using templates and automated replacements.",
     tags: ["Python", "PyQt5", "DOCX", "Automation"],
-  },
-  {
-    name: "Farming Simulator",
-    type: "Pygame Project",
-    description:
-      "A farming game with planting, watering, harvesting, growth stages, inventory systems, and sprite interactions.",
-    tags: ["Python", "Pygame", "Sprites", "Game Logic"],
+    image: "/invoice.png",
+    imageAlt: "Automated Invoice Generator application screenshot",
   },
   {
     name: "Robotics Autonomous Code",
@@ -84,13 +83,24 @@ const projects = [
     description:
       "Robot control code using odometry, PID tuning, intake systems, pneumatics, and autonomous path planning.",
     tags: ["C++", "PROS", "LemLib", "Robotics"],
+    image: "/Vex-Logo.jpg",
+    imageAlt: "VEX V5 competition robot",
   },
+  {
+    name: "Kitchen 3D",
+    type: "3D Cooking Simulation Game",
+    description:
+      "A single-player 3D cooking game inspired by Overcooked, featuring player movement, ingredient preparation, cooking stations, order completion, and an interactive kitchen environment.",
+    tags: ["JavaScript", "Three.js", "3D Game Dev", "Game Logic"],
+    image: "/kicthen 3d.png",
+    imageAlt: "Kitchen 3D cooking simulation game screenshot",
+  }
 ];
 
 const techGroups = [
   {
     title: "Languages",
-    items: ["JavaScript", "TypeScript", "Python", "C++", "HTML", "CSS"],
+    items: ["JavaScript", "TypeScript", "Python", "C++", "C", "C#", "HTML", "CSS"],
   },
   {
     title: "Frontend",
@@ -98,7 +108,7 @@ const techGroups = [
   },
   {
     title: "Backend & Data",
-    items: ["Node.js", "Prisma", "REST APIs", "CSV/XLSX", "Automation"],
+    items: ["Node.js", "MongoDB", "Prisma", "Firebase", "REST APIs"],
   },
   {
     title: "Tools",
@@ -110,7 +120,8 @@ export default function Home() {
   const [navHidden, setNavHidden] = useState(false);
 
   useEffect(() => {
-    const revealElements = document.querySelectorAll<HTMLElement>(".reveal");
+    const revealElements =
+      document.querySelectorAll<HTMLElement>(".reveal");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -128,9 +139,13 @@ export default function Home() {
       }
     );
 
-    revealElements.forEach((element) => observer.observe(element));
+    revealElements.forEach((element) => {
+      observer.observe(element);
+    });
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -138,8 +153,9 @@ export default function Home() {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const scrollingDown = currentScrollY > lastScrollY;
 
-      if (currentScrollY > lastScrollY && currentScrollY > 120) {
+      if (scrollingDown && currentScrollY > 120) {
         setNavHidden(true);
       } else {
         setNavHidden(false);
@@ -148,14 +164,21 @@ export default function Home() {
       lastScrollY = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, {
+      passive: true,
+    });
 
-    return () => window.removeEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
   }, []);
 
   return (
     <main>
-      <nav className={`nav ${navHidden ? "navHidden" : ""}`}>
+      <nav
+        className={`nav ${navHidden ? "navHidden" : ""}`}
+        aria-label="Main navigation"
+      >
         <a href="#home" className="brand" aria-label="Go to home">
           BL
         </a>
@@ -172,16 +195,24 @@ export default function Home() {
       <section id="home" className="hero section reveal">
         <div className="heroText">
           <p className="eyebrow">Software Engineering Student</p>
-          <h1>Hey, I&apos;m Bernie Liu</h1>
+
+          <h1>
+            Hey, I&apos;m
+            <br />
+            Bernie Liu
+          </h1>
+
           <p className="heroCopy">
-            I&apos;m interested in full-stack development, robotics, automation,
-            and building tools that make learning and productivity easier.
+            I&apos;m interested in full-stack development, robotics,
+            automation, and building tools that make learning and productivity
+            easier.
           </p>
 
           <div className="heroActions">
             <a href="#projects" className="button primary">
               View Projects
             </a>
+
             <a href="#contacts" className="button secondary">
               Contact Me
             </a>
@@ -193,6 +224,7 @@ export default function Home() {
           <div className="profileCircle">BL</div>
 
           <p className="cardLabel">Currently exploring</p>
+
           <h2>Web apps, robotics, and intelligent tools</h2>
 
           <div className="miniStats">
@@ -206,39 +238,47 @@ export default function Home() {
       <section id="about" className="section split reveal">
         <div>
           <p className="eyebrow">About Me</p>
-          <h2>I like projects that combine logic, creativity, and real users.</h2>
+
+          <h2>
+            I like projects that combine logic, creativity, and real users.
+          </h2>
         </div>
 
         <p className="sectionText">
           I started by building small games and websites, then moved into larger
-          projects like educational apps, automation tools, and robotics systems.
-          Outside of coding, I lead clubs, mentor new students, and look for ways
-          to make technical spaces more welcoming.
+          projects like educational apps, automation tools, and robotics
+          systems. Outside of coding, I lead clubs, mentor new students, and
+          look for ways to make technical spaces more welcoming.
         </p>
       </section>
 
       <section id="experience" className="section reveal">
         <div className="sectionHeader">
           <p className="eyebrow">Experience</p>
+
           <h2>Leadership, technical projects, and student impact.</h2>
         </div>
 
         <div className="timeline">
-          {experiences.map((exp) => (
-            <article className="timelineItem" key={`${exp.role}-${exp.org}`}>
+          {experiences.map((experience) => (
+            <article
+              className="timelineItem"
+              key={`${experience.role}-${experience.org}`}
+            >
               <div className="timelineDot" />
 
               <div className="card">
                 <div className="cardTop">
                   <div>
-                    <h3>{exp.role}</h3>
-                    <p>{exp.org}</p>
+                    <h3>{experience.role}</h3>
+                    <p>{experience.org}</p>
                   </div>
-                  <span>{exp.period}</span>
+
+                  <span>{experience.period}</span>
                 </div>
 
                 <ul>
-                  {exp.points.map((point) => (
+                  {experience.points.map((point) => (
                     <li key={point}>{point}</li>
                   ))}
                 </ul>
@@ -273,16 +313,30 @@ export default function Home() {
             <h2>Selected work.</h2>
           </div>
 
-          <a href="https://github.com/83rnyyyy" className="textLink">
+          <a
+            href="https://github.com/83rnyyyy"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="textLink"
+          >
             GitHub →
           </a>
         </div>
 
         <div className="grid projectsGrid">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <article className="projectCard" key={project.name}>
               <div className="projectVisual">
-                <span>{project.name.slice(0, 2).toUpperCase()}</span>
+                <Image
+                  src={project.image}
+                  alt={project.imageAlt}
+                  fill
+                  priority={index === 0}
+                  sizes="(max-width: 880px) 100vw, 50vw"
+                  className="projectImage"
+                />
+
+                <div className="projectImageOverlay" />
               </div>
 
               <div className="projectContent">
@@ -324,14 +378,19 @@ export default function Home() {
 
       <section id="contacts" className="section contact reveal">
         <p className="eyebrow">Contact</p>
+
         <h2>Feel Free To Reach Out!</h2>
+
         <p>
-          I&apos;m always open to talking about software, robotics, projects, or
-          new opportunities.
+          I&apos;m always open to talking about software, robotics, projects,
+          or new opportunities.
         </p>
 
         <div className="contactLinks">
-          <a href="mailto:b384liu@uwaterloo.ca">b384liu@uwaterloo.ca</a>
+          <a href="mailto:b384liu@uwaterloo.ca">
+            b384liu@uwaterloo.ca
+          </a>
+
           <a
             href="https://github.com/83rnyyyy"
             target="_blank"
@@ -339,6 +398,7 @@ export default function Home() {
           >
             GitHub
           </a>
+
           <a
             href="https://www.linkedin.com/in/bernie-liu"
             target="_blank"
@@ -346,7 +406,14 @@ export default function Home() {
           >
             LinkedIn
           </a>
-          <a href="/resume.pdf">Resume</a>
+
+          <a
+            href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Resume
+          </a>
         </div>
       </section>
     </main>
