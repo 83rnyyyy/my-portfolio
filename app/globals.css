@@ -23,9 +23,22 @@ body {
   margin: 0;
   color: var(--text);
   background:
-    radial-gradient(circle at 15% 10%, rgba(255, 217, 168, 0.8), transparent 25%),
-    radial-gradient(circle at 85% 12%, rgba(215, 230, 255, 0.8), transparent 22%),
-    linear-gradient(180deg, #f9f7f3 0%, var(--bg) 42%, #f4efe8 100%);
+    radial-gradient(
+      circle at 15% 10%,
+      rgba(255, 217, 168, 0.8),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 85% 12%,
+      rgba(215, 230, 255, 0.8),
+      transparent 22%
+    ),
+    linear-gradient(
+      180deg,
+      #f9f7f3 0%,
+      var(--bg) 42%,
+      #f4efe8 100%
+    );
   font-family:
     Inter,
     ui-sans-serif,
@@ -44,6 +57,11 @@ a {
 main {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
+}
+
+.section {
+  padding: 92px 0;
+  scroll-margin-top: 100px;
 }
 
 .nav {
@@ -77,6 +95,7 @@ main {
 .brand {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
   width: 42px;
   height: 42px;
   border-radius: 50%;
@@ -97,7 +116,9 @@ main {
   border-radius: 999px;
   color: var(--muted);
   font-size: 0.9rem;
-  transition: 180ms ease;
+  transition:
+    color 180ms ease,
+    background 180ms ease;
 }
 
 .navLinks a:hover {
@@ -105,14 +126,12 @@ main {
   background: rgba(0, 0, 0, 0.06);
 }
 
-.section {
-  padding: 92px 0;
-}
-
 .hero {
   min-height: calc(100vh - 80px);
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(320px, 0.85fr);
   align-items: center;
   gap: 44px;
 }
@@ -178,17 +197,23 @@ h3 {
   justify-content: center;
   min-height: 48px;
   padding: 0 18px;
-  border-radius: 999px;
   border: 1px solid var(--line);
+  border-radius: 999px;
   font-weight: 700;
-  transition: 200ms ease;
+  transition:
+    color 200ms ease,
+    background 200ms ease,
+    border-color 200ms ease,
+    transform 200ms ease;
 }
 
-.button.primary,
-.contactLinks a:hover {
+.button.primary {
   color: #ffffff;
   background: var(--accent);
   border-color: var(--accent);
+}
+
+.button.primary:hover {
   transform: translateY(-2px);
 }
 
@@ -226,8 +251,17 @@ h3 {
   height: 250px;
   border-radius: 999px;
   background:
-    radial-gradient(circle at 35% 35%, #ffffff, transparent 26%),
-    linear-gradient(135deg, #111111, #c4a98c 55%, #f7ebdc);
+    radial-gradient(
+      circle at 35% 35%,
+      #ffffff,
+      transparent 26%
+    ),
+    linear-gradient(
+      135deg,
+      #111111,
+      #c4a98c 55%,
+      #f7ebdc
+    );
   filter: saturate(1.1);
 }
 
@@ -249,10 +283,10 @@ h3 {
 
 .cardLabel {
   color: var(--muted);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
   font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .heroCard h2 {
@@ -320,9 +354,9 @@ h3 {
 .timeline::before {
   content: "";
   position: absolute;
-  left: 9px;
   top: 8px;
   bottom: 8px;
+  left: 9px;
   width: 1px;
   background: var(--line);
 }
@@ -336,13 +370,13 @@ h3 {
 }
 
 .timelineDot {
+  z-index: 1;
   width: 19px;
   height: 19px;
   margin-top: 28px;
   border: 4px solid var(--bg);
   border-radius: 999px;
   background: var(--accent);
-  z-index: 1;
 }
 
 .card,
@@ -405,7 +439,9 @@ ul {
 
 .projectCard {
   overflow: hidden;
-  transition: 220ms ease;
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
 }
 
 .projectCard:hover {
@@ -414,19 +450,31 @@ ul {
 }
 
 .projectVisual {
-  min-height: 180px;
-  display: grid;
-  place-items: center;
-  background:
-    linear-gradient(135deg, rgba(17, 17, 17, 0.94), rgba(17, 17, 17, 0.62)),
-    radial-gradient(circle at top right, rgba(255, 255, 255, 0.32), transparent 32%);
+  position: relative;
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  background: #ddd8d1;
 }
 
-.projectVisual span {
-  color: #ffffff;
-  font-size: 4.5rem;
-  font-weight: 950;
-  letter-spacing: -0.12em;
+.projectImage {
+  object-fit: cover;
+  transition: transform 500ms ease;
+}
+
+.projectImageOverlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    transparent 50%,
+    rgba(0, 0, 0, 0.14) 100%
+  );
+}
+
+.projectCard:hover .projectImage {
+  transform: scale(1.05);
 }
 
 .projectContent {
@@ -478,12 +526,13 @@ ul {
   color: #111111;
   background: #ffffff;
   border-color: #ffffff;
+  transform: translateY(-2px);
 }
 
 .reveal {
   opacity: 0;
-  transform: translateY(36px);
   filter: blur(10px);
+  transform: translateY(36px);
   transition:
     opacity 700ms ease,
     transform 700ms ease,
@@ -492,8 +541,8 @@ ul {
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
   filter: blur(0);
+  transform: translateY(0);
 }
 
 @media (max-width: 880px) {
@@ -520,8 +569,8 @@ ul {
   }
 
   .hero {
-    padding-top: 70px;
     min-height: auto;
+    padding-top: 70px;
   }
 
   .heroCard {
@@ -531,6 +580,10 @@ ul {
   .section {
     padding: 64px 0;
   }
+
+  .projectVisual {
+    height: 300px;
+  }
 }
 
 @media (max-width: 560px) {
@@ -539,8 +592,8 @@ ul {
   }
 
   .navLinks a {
-    font-size: 0.82rem;
     padding: 8px 9px;
+    font-size: 0.82rem;
   }
 
   h1 {
@@ -551,6 +604,10 @@ ul {
   .sectionHeader.row {
     flex-direction: column;
     align-items: flex-start;
+  }
+
+  .projectVisual {
+    height: 220px;
   }
 
   .contact {
@@ -567,19 +624,20 @@ ul {
   .reveal,
   .button,
   .contactLinks a,
-  .projectCard {
+  .projectCard,
+  .projectImage {
     transition: none;
   }
 
   .reveal {
     opacity: 1;
-    transform: none;
     filter: none;
+    transform: none;
   }
 
   .navHidden {
-    transform: none;
     opacity: 1;
     pointer-events: auto;
+    transform: none;
   }
 }
