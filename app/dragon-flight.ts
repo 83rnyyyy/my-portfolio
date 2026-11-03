@@ -5,7 +5,7 @@ export type DragonPoint = {
   radius: number;
 };
 
-/** Blend the original hero orbit into a viewport-wide, figure-eight flight. */
+/** Blend the hero orbit into a rounded loop along the screen's perimeter. */
 export function getDragonFlight(
   width: number,
   height: number,
@@ -21,10 +21,19 @@ export function getDragonFlight(
   const epsilon = 0.006;
 
   // Leave room for the horns, whiskers, and claws at every viewport edge.
-  const insetX = Math.min(width * 0.2, 90 * bodyScale + 12);
-  const insetY = Math.min(height * 0.2, 90 * bodyScale + 12);
-  const roamRadiusX = Math.max(width / 2 - insetX, 1);
-  const roamRadiusY = Math.max(height / 2 - insetY, 1);
+  const insetX = Math.min(width * 0.2, 104 * bodyScale + 10);
+  const insetY = Math.min(height * 0.2, 104 * bodyScale + 10);
+  const left = insetX;
+  const right = width - insetX;
+  const top = insetY;
+  const bottom = height - insetY;
+  const corner = Math.min(100 * bodyScale, (right - left) * 0.22, (bottom - top) * 0.22);
+  const horizontal = right - left - 2 * corner;
+  const vertical = bottom - top - 2 * corner;
+  const quarterArc = corner * Math.PI / 2;
+  const perimeter = 2 * horizontal + 2 * vertical + 4 * quarterArc;
+  const perimeterSpeed = perimeter / (2 * Math.PI);
+  const rightMidpoint = horizontal + quarterArc + vertical / 2;
 
   function heroPoint(theta: number) {
     const wave = Math.sin(theta * 3 + time * 0.65) * 22 * scale;
@@ -38,18 +47,46 @@ export function getDragonFlight(
     };
   }
 
-  function backgroundPoint(theta: number) {
-    return {
-      x: width / 2 + Math.cos(theta) * roamRadiusX,
-      y: height / 2 + Math.sin(theta * 2) * roamRadiusY,
-    };
+  function perimeterPoint(theta: number) {
+    // Arc-length coordinates keep both the head and every trailing scale on
+    // the same border route, including the four rounded corners.
+    let distance = ((theta * perimeterSpeed + rightMidpoint) % perimeter + perimeter) % perimeter;
+    if (distance < horizontal) return { x: left + corner + distance, y: top };
+    distance -= horizontal;
+    if (distance < quarterArc) {
+      const angle = -Math.PI / 2 + distance / corner;
+      return { x: right - corner + Math.cos(angle) * corner, y: top + corner + Math.sin(angle) * corner };
+    }
+    distance -= quarterArc;
+    if (distance < vertical) return { x: right, y: top + corner + distance };
+    distance -= vertical;
+    if (distance < quarterArc) {
+      const angle = distance / corner;
+      return { x: right - corner + Math.cos(angle) * corner, y: bottom - corner + Math.sin(angle) * corner };
+    }
+    distance -= quarterArc;
+    if (distance < horizontal) return { x: right - corner - distance, y: bottom };
+    distance -= horizontal;
+    if (distance < quarterArc) {
+      const angle = Math.PI / 2 + distance / corner;
+      return { x: left + corner + Math.cos(angle) * corner, y: bottom - corner + Math.sin(angle) * corner };
+    }
+    distance -= quarterArc;
+    if (distance < vertical) return { x: left, y: bottom - corner - distance };
+    distance -= vertical;
+    const angle = Math.PI + distance / corner;
+    return { x: left + corner + Math.cos(angle) * corner, y: top + corner + Math.sin(angle) * corner };
   }
 
-  function backgroundSpeed(theta: number) {
-    return Math.hypot(
-      -Math.sin(theta) * roamRadiusX,
-      2 * Math.cos(theta * 2) * roamRadiusY,
-    );
+  function backgroundPoint(theta: number) {
+    const point = perimeterPoint(theta);
+    const next = perimeterPoint(theta + 0.001);
+    const tangent = Math.atan2(next.y - point.y, next.x - point.x);
+    const wave = Math.sin(theta * 5 - time * 1.15) * 6 * bodyScale;
+    return {
+      x: point.x + Math.sin(tangent) * wave,
+      y: point.y - Math.cos(tangent) * wave,
+    };
   }
 
   let backgroundTheta = headTheta;
@@ -60,11 +97,9 @@ export function getDragonFlight(
     const radius = (3 + 14 * Math.pow(1 - bodyProgress, 0.57)) * bodyScale;
 
     if (index > 0) {
-      // Space scales by physical distance, so the wider route never stretches
-      // the dragon into disconnected segments. The midpoint improves turns.
+      // Keep the body connected at the same physical spacing on every edge.
       const spacing = (previousRadius + radius) * 0.45;
-      const midpoint = backgroundTheta - spacing / (2 * backgroundSpeed(backgroundTheta));
-      backgroundTheta -= spacing / backgroundSpeed(midpoint);
+      backgroundTheta -= spacing / perimeterSpeed;
     }
     previousRadius = radius;
 
