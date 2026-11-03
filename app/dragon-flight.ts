@@ -82,10 +82,14 @@ export function getDragonFlight(
     const point = perimeterPoint(theta);
     const next = perimeterPoint(theta + 0.001);
     const tangent = Math.atan2(next.y - point.y, next.x - point.x);
-    const wave = Math.sin(theta * 5 - time * 1.15) * 6 * bodyScale;
+    // Send a visible rising-and-falling wave through the body as it flies.
+    // Bias the wave inward to leave room for the horns along the screen edge.
+    const amplitude = Math.min(42 * bodyScale, width * 0.08, height * 0.055);
+    const wave = (Math.sin(theta * 6 - time * 2.75) - 1) * amplitude * 0.5;
+    const bob = Math.sin(time * 1.4) * Math.min(10 * bodyScale, height * 0.018);
     return {
       x: point.x + Math.sin(tangent) * wave,
-      y: point.y - Math.cos(tangent) * wave,
+      y: point.y - Math.cos(tangent) * wave + bob,
     };
   }
 
