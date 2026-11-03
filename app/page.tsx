@@ -13,13 +13,34 @@ const navItems = [
 
 const experiences = [
   {
+    role: "Software Engineer — Eve Team",
+    org: "WATonomous",
+    period: "2026 — Present",
+    location: "Waterloo, Ontario",
+    points: [
+      "Reduced BEVFusion inference latency by 35% through TensorRT INT8 optimization while maintaining detection accuracy within 2% of the PyTorch baseline.",
+      "Identified object-tracking, GPU memory, and inference bottlenecks using 50+ ROS bag recordings, improving autonomous vehicle perception pipeline processing speed by 10%.",
+    ],
+  },
+  {
+    role: "Software Engineer",
+    org: "UW Cube Design Incubator",
+    period: "Aug. 2026 — Present",
+    location: "Waterloo, Ontario",
+    points: [
+      "Improve website performance and internal workflows by 15% by developing full-stack features and internal tools using Next.js, React, FastAPI, Prisma, and MongoDB.",
+      "Improve UW CUBE’s AI chatbot response accuracy by 10% by integrating backend APIs, database services, and application logic to expand knowledge coverage and improve the user experience.",
+    ],
+  },
+  {
     role: "Full-Stack Developer",
     org: "Teenage Theory",
     period: "July 2025 — July 2026",
     location: "Richmond Hill, Ontario",
     points: [
-      "Co-founded and developed a student-led blogging platform using Next.js, React, Prisma, and MongoDB, enabling teenagers to publish and manage original articles.",
-      "Implemented CRUD functionality, responsive interfaces, and Firebase Storage integration for image uploads across mobile and desktop devices.",
+      "Co-founded a full-stack blogging platform using Next.js, React, Prisma, and MongoDB, implementing 10+ routes and 5+ database-backed features for publishing, authentication, and content management.",
+      "Built CRUD workflows, responsive interfaces, and Firebase Storage integration for image uploads, supporting 2,000+ site visits across mobile and desktop devices.",
+      "Optimized MongoDB and Prisma queries through schema refinement, indexing, and reduced redundant database calls, cutting average content retrieval latency by approximately 35% and reducing database operations by 25%.",
     ],
   },
   {
@@ -38,8 +59,9 @@ const experiences = [
     period: "Sept. 2023 — June 2026",
     location: "Richmond Hill, Ontario",
     points: [
-      "Developed the official Model UN website using HTML, CSS, JavaScript, and Tailwind CSS, serving 300+ users while leading a team of six contributors.",
-      "Built reusable responsive components and interactive frontend features, debugging layout and browser issues to maintain a consistent experience across desktop and mobile devices.",
+      "Developed the official Model UN website using HTML, CSS, JavaScript, and Tailwind CSS, serving 300+ users while leading a team of 10 contributors.",
+      "Reduced invoice preparation time by approximately 80% by building a Python and PyQt5 desktop automation system to parse CSV and Excel delegation data and populate invoice records.",
+      "Generated 50+ formatted invoices in under 1 second using python-docx, eliminating repetitive manual data entry and standardizing invoice formatting across Model UN delegations.",
     ],
   },
 ];
