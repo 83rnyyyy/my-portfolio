@@ -98,7 +98,7 @@ const projects: Project[] = [
     name: "Snitch",
     type: "Interview review & analysis",
     category: "Web",
-    description: "An evidence-first second look at interviews. Review recordings, explore timestamped moments, and compare spoken claims with a résumé, with live interviews and screen sharing built in.",
+    description: "Review recorded interviews, examine timestamped evidence, and compare spoken claims with a résumé. Includes live interviews and screen sharing.",
     tags: ["Next.js", "Python", "FastAPI", "WebRTC"],
     image: "/snitch-logo.png",
     imageAlt: "Snitch interview review and analysis platform logo",
@@ -109,7 +109,7 @@ const projects: Project[] = [
     name: "Air Transit",
     type: "Airport finder",
     category: "Web",
-    description: "Making airport data easier to explore. Search by location and discover airport codes, cities, countries, and coordinates in one place.",
+    description: "Search airport data by location and view airport codes, cities, countries, and coordinates.",
     tags: ["TypeScript", "HTML / CSS", "JSON"],
     image: "/Air Transit.png",
     imageAlt: "Air Transit airport finder application screenshot",
@@ -119,7 +119,7 @@ const projects: Project[] = [
     name: "Invoice Generator",
     type: "Desktop productivity tool",
     category: "Automation",
-    description: "From spreadsheets to ready-to-send invoices. A desktop app that turns CSV and XLSX data into formatted DOCX documents using reusable templates.",
+    description: "A desktop application that converts CSV and XLSX data into formatted DOCX invoices using reusable templates.",
     tags: ["Python", "PyQt5", "DOCX"],
     image: "/invoice.png",
     imageAlt: "Automated Invoice Generator desktop application screenshot",
@@ -129,7 +129,7 @@ const projects: Project[] = [
     name: "Autonomous Robotics",
     type: "VEX V5 / PROS",
     category: "Robotics",
-    description: "Bringing code into the physical world. Robot control systems built with odometry, PID tuning, pneumatics, and autonomous path planning.",
+    description: "Robot control software with odometry, PID tuning, pneumatics, and autonomous path planning.",
     tags: ["C++", "PROS", "LemLib"],
     image: "/Vex-Logo.jpg",
     imageAlt: "VEX Robotics logo",
@@ -139,7 +139,7 @@ const projects: Project[] = [
     name: "Kitchen 3D",
     type: "3D cooking simulation",
     category: "Games",
-    description: "A little kitchen chaos, built from scratch. A single-player game inspired by Overcooked, with ingredient preparation, cooking stations, and orders to complete.",
+    description: "A single-player 3D cooking game inspired by Overcooked, with ingredient preparation, cooking stations, and order management.",
     tags: ["JavaScript", "Three.js", "Game development"],
     image: "/kicthen 3d.png",
     imageAlt: "Kitchen 3D cooking simulation game screenshot",
@@ -212,29 +212,26 @@ export default function Home() {
         <section id="home" className="hero container" aria-labelledby="hero-title">
           <div className="hero-orbit" aria-hidden="true"><span /><span /><i className="orbit-cross cross-one" /><i className="orbit-cross cross-two" /></div>
           <div className="hero-content">
-            <p className="eyebrow hero-eyebrow"><span className="small-star">✳</span> A little curiosity. A lot of code.</p>
             <h1 id="hero-title">Bernie<br /><span>Liu<span className="name-period">.</span></span></h1>
             <div className="hero-description">
               <p className="hero-role">Software Engineering student at Waterloo.</p>
-              <p>I build thoughtful web experiences, useful tools, and robots that find their own way.</p>
             </div>
             <div className="hero-actions">
-              <a href="#projects" className="button button-primary">Explore my work <Arrow /></a>
-              <a href="#contacts" className="button button-text">Let’s connect <Arrow diagonal /></a>
+              <a href="#projects" className="button button-primary">View projects <Arrow /></a>
+              <a href="#contacts" className="button button-text">Contact <Arrow diagonal /></a>
             </div>
           </div>
-          <div className="dragon-caption" aria-hidden="true"><span className="caption-line" /><span>Led by curiosity.<br />Built to keep moving.</span></div>
           <div className="hero-bottom">
             <p><span className="status-dot" /> Software Engineering student <span className="hero-school">@ University of Waterloo</span></p>
-            <a href="#projects" className="scroll-link">Scroll to explore <span>↓</span></a>
+            <a href="#projects" className="scroll-link" aria-label="View projects"><span>↓</span></a>
           </div>
         </section>
 
         <div className="content-surface">
           <section id="projects" className="section container" aria-labelledby="work-title">
             <div className="section-heading">
-              <div><p className="eyebrow"><span>01 /</span> Selected work</p><h2 id="work-title">Ideas, made real<span className="subtle-period">.</span></h2></div>
-              <a href="https://github.com/83rnyyyy" target="_blank" rel="noopener noreferrer" className="inline-link">More on GitHub <Arrow diagonal /></a>
+              <h2 id="work-title">Projects</h2>
+              <a href="https://github.com/83rnyyyy" target="_blank" rel="noopener noreferrer" className="inline-link">GitHub <Arrow diagonal /></a>
             </div>
             <div className="project-filters" role="group" aria-label="Filter projects by category">
               {["All work", "Web", "Automation", "Robotics", "Games"].map((category) => <button key={category} type="button" className={filter === category ? "selected" : ""} aria-pressed={filter === category} onClick={() => setFilter(category)}>{category}{category === "All work" && <span>{String(projects.length).padStart(2, "0")}</span>}</button>)}
@@ -256,17 +253,15 @@ export default function Home() {
           </section>
 
           <section id="about" className="section about-section container" aria-labelledby="about-title">
-            <div className="about-intro"><p className="eyebrow"><span>02 /</span> A little about me</p><h2 id="about-title">Logic meets<br /><span className="serif-word">imagination.</span></h2><a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-link">The longer version <Arrow diagonal /></a></div>
+            <div className="about-intro"><h2 id="about-title">About</h2><a href="/resume.pdf" target="_blank" rel="noopener noreferrer" className="inline-link">Résumé <Arrow diagonal /></a></div>
             <div className="about-copy">
-              <p className="large-copy">I like turning “what if?” into something you can actually use.</p>
-              <p>I’m Bernie, a Software Engineering student at the University of Waterloo. My interests live somewhere between full-stack development, robotics, and making everyday things a little easier.</p>
-              <p>I started with small games and websites, then found my way into educational apps, automation tools, and autonomous systems. Outside of code, I lead clubs, mentor new students, and help make technical spaces more welcoming.</p>
-              <div className="interest-list"><span>Thoughtful interfaces</span><span>Useful automation</span><span>Things that move</span></div>
+              <p>I’m a Software Engineering student at the University of Waterloo, focused on full-stack development, robotics, and automation.</p>
+              <p>My projects include web applications, automation tools, and autonomous systems. I also lead clubs and mentor students.</p>
             </div>
           </section>
 
           <section id="experience" className="section container" aria-labelledby="experience-title">
-            <div className="section-heading"><div><p className="eyebrow"><span>03 /</span> Along the way</p><h2 id="experience-title">Building. Leading. Learning.</h2></div><span className="section-note">The experience behind the work.</span></div>
+            <div className="section-heading"><h2 id="experience-title">Experience</h2></div>
             <div className="experience-list">
               {experiences.map((experience, index) => <article className="experience-row" key={experience.org}>
                 <span className="experience-index">0{index + 1}</span>
@@ -275,23 +270,22 @@ export default function Home() {
               </article>)}
             </div>
             <div id="education" className="education-section">
-              <p className="eyebrow">A foundation for what’s next</p>
+              <p className="eyebrow">Education</p>
               <div className="education-grid">{education.map((item) => <article className="education-item" key={item.school}><span className="education-label">{item.label}</span><h3>{item.school}</h3><p className="education-program">{item.program}</p><p>{item.detail}</p></article>)}</div>
             </div>
           </section>
 
           <section id="tech-stack" className="section stack-section container" aria-labelledby="stack-title">
-            <h2 id="stack-title" className="eyebrow"><span>04 /</span> The toolkit</h2>
+            <h2 id="stack-title" className="eyebrow">Toolkit</h2>
             <div className="stack-grid">{techGroups.map((group, index) => <article className="stack-group" key={group.title}><span className="stack-number">0{index + 1}</span><h3>{group.title}</h3><div className="stack-items">{group.items.map((item) => <span key={item}>{item}</span>)}</div></article>)}</div>
           </section>
 
           <section id="contacts" className="contact-section container" aria-labelledby="contact-title">
-            <p className="eyebrow"><span>05 /</span> Something in mind?</p>
-            <div className="contact-heading"><h2 id="contact-title">Let’s build<br /><span className="serif-word">something good.</span></h2><a href="mailto:b384liu@uwaterloo.ca" className="contact-arrow" aria-label="Email Bernie Liu"><Arrow diagonal /></a></div>
-            <div className="contact-bottom"><a href="mailto:b384liu@uwaterloo.ca" className="email-link">b384liu@uwaterloo.ca <Arrow diagonal /></a><p>Projects, opportunities, or a good conversation.<br />My inbox is open.</p></div>
+            <div className="contact-heading"><h2 id="contact-title">Contact</h2><a href="mailto:b384liu@uwaterloo.ca" className="contact-arrow" aria-label="Email Bernie Liu"><Arrow diagonal /></a></div>
+            <div className="contact-bottom"><a href="mailto:b384liu@uwaterloo.ca" className="email-link">b384liu@uwaterloo.ca <Arrow diagonal /></a></div>
           </section>
 
-          <footer className="footer container"><a href="#home" className="footer-name">Bernie Liu<span>.</span></a><p>Built with intention. And a little imagination.</p><div className="footer-links"><a href="https://github.com/83rnyyyy" target="_blank" rel="noopener noreferrer">GitHub <Arrow diagonal /></a><a href="https://www.linkedin.com/in/bernie-liu" target="_blank" rel="noopener noreferrer">LinkedIn <Arrow diagonal /></a><a href="#home" aria-label="Back to top">↑</a></div></footer>
+          <footer className="footer container"><a href="#home" className="footer-name">Bernie Liu<span>.</span></a><div className="footer-links"><a href="https://github.com/83rnyyyy" target="_blank" rel="noopener noreferrer">GitHub <Arrow diagonal /></a><a href="https://www.linkedin.com/in/bernie-liu" target="_blank" rel="noopener noreferrer">LinkedIn <Arrow diagonal /></a><a href="#home" aria-label="Back to top">↑</a></div></footer>
         </div>
       </main>
     </>
